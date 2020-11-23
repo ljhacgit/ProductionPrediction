@@ -35,22 +35,19 @@ for line in data[2:]:
         input_data.append([float(line[0]), age_avg])
         output_data.append(float(line[2]))
 
-print(input_data)
-print(output_data)
-
 input_data = np.array(input_data)
 # input_data = (input_data - np.mean(input_data))/np.std(input_data)
 
 output_data = np.array(output_data)
 output_data = (output_data - np.mean(output_data))/np.std(output_data)
 
-print(input_data)
-print(output_data)
+print(input_data.shape)
+print(output_data.shape)
 
 model = Sequential()
 model.add(Dense(64, activation='relu', input_shape=(2, )))
 model.add(Dropout(0.2))
-model.add(Dense(64, activation='relu'))
+model.add(Dense(256, activation='relu'))
 model.add(Dropout(0.2))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(1))
@@ -66,14 +63,14 @@ print(model.summary())
 history = model.fit(
     input_data,
     output_data,
-    epochs=5000,
+    epochs=10,
     validation_split=0.2
 )
 # plot_history(history)
 
 plt.plot(input_data[:10, 1], output_data[:10])
+
 X = np.arange(input_data[0, 1], input_data[9, 1], 1)
-print(X)
-Y = [float(model.predict([[2018, x]])) for x in X]
+Y = [float(model.predict([[input_data[0, 0], x]])) for x in X]
 plt.plot(X, Y)
 plt.show()
