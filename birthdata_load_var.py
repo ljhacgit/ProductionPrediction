@@ -57,19 +57,15 @@ print(output_data.shape)
 
 model = keras.models.load_model("birthdata_model")
 
-plt.plot(np.multiply(input_data[:10, 1], input_data_age_std) + input_data_age_mean, np.multiply(output_data[:10], output_data_std) + output_data_mean)
-
 X = np.arange(input_data[0, 1], input_data[9, 1], 0.05)
+print(X)
 X = np.multiply(X, input_data_age_std) + input_data_age_mean
+print(X)
+
 Y = [float(model.predict([[input_data[0, 0], x]])) for x in X]
+print(Y)
 Y = np.multiply(Y, output_data_std) + output_data_mean
-
-
+print(Y)
 plt.plot(X, Y)
 
-# plt.plot(X, Y2, label="1980")
-# plt.plot(X, Y3, label="1880")
-# plt.plot(X, Y4, label="1780")
-
-plt.legend()
 plt.show()
