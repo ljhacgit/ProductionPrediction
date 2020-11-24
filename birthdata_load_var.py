@@ -60,7 +60,7 @@ model = keras.models.load_model("birthdata_model")
 X = np.arange(input_data[0, 1], input_data[9, 1]+2, 0.05)
 Y = [float(model.predict([[input_data[0, 0], x]])) for x in X]
 
-plt.plot(np.multiply(input_data[:10, 1], input_data_age_std) + input_data_age_mean, np.multiply(output_data[:10], output_data_std) + output_data_mean, label="target")
+plt.plot(np.multiply(input_data[:10, 1], input_data_age_std) + input_data_age_mean, np.multiply(output_data[:10], output_data_std) + output_data_mean, label="target 2018")
 plt.plot(np.multiply(X, input_data_age_std) + input_data_age_mean, np.multiply(Y, output_data_std) + output_data_mean, label="pred. 2018")
 
 for year in [2015, 2010, 2000, 1950, 1900, 1850, 1800]:
@@ -68,7 +68,6 @@ for year in [2015, 2010, 2000, 1950, 1900, 1850, 1800]:
     Y_t = np.multiply(Y, output_data_std) + output_data_mean
     Y_t[Y_t < 0] = 0
     plt.plot(np.multiply(X, input_data_age_std) + input_data_age_mean, Y_t, label="pred. "+str(year))
-
 
 plt.legend()
 plt.show()
