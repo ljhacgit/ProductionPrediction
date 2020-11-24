@@ -65,3 +65,6 @@ plt.plot(np.multiply(X, input_data_age_std) + input_data_age_mean, np.multiply(Y
 
 plt.legend()
 plt.show()
+
+print(np.multiply(X, input_data_age_std) + input_data_age_mean)
+print(np.multiply(Y, output_data_std) + output_data_mean)
