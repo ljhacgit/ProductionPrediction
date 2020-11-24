@@ -55,35 +55,21 @@ output_data = (output_data - output_data_mean)/output_data_std
 print(input_data.shape)
 print(output_data.shape)
 
-model = Sequential()
-model.add(Dense(64, activation='relu', input_shape=(2, )))
-model.add(Dropout(0.2))
-model.add(Dense(64, activation='relu'))
-model.add(Dropout(0.2))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(1))
-
-model.compile(
-    optimizer=keras.optimizers.Adam(),
-    loss="mse",
-    metrics=["mse"]
-)
-
-print(model.summary())
-
-history = model.fit(
-    input_data,
-    output_data,
-    epochs=1000,
-    validation_split=0.2
-)
-plot_history(history)
-
-model.save("birthdata_model")
+model = keras.models.load_model("birthdata_model")
 
 plt.plot(np.multiply(input_data[:10, 1], input_data_age_std) + input_data_age_mean, np.multiply(output_data[:10], output_data_std) + output_data_mean)
 
 X = np.arange(input_data[0, 1], input_data[9, 1], 0.05)
+X = np.multiply(X, input_data_age_std) + input_data_age_mean
 Y = [float(model.predict([[input_data[0, 0], x]])) for x in X]
-plt.plot(np.multiply(X, input_data_age_std) + input_data_age_mean, np.multiply(Y, output_data_std) + output_data_mean)
+Y = np.multiply(Y, output_data_std) + output_data_mean
+
+
+plt.plot(X, Y)
+
+# plt.plot(X, Y2, label="1980")
+# plt.plot(X, Y3, label="1880")
+# plt.plot(X, Y4, label="1780")
+
+plt.legend()
 plt.show()
